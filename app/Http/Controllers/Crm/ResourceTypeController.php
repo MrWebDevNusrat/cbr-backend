@@ -18,11 +18,11 @@ class ResourceTypeController extends Controller
     {
         $this->media = new FileController();
 
-        $this->middleware('permission:crm_resource_types_index', ['only' => 'index']);
-        $this->middleware('permission:crm_resource_types_store', ['only' => 'store', 'show']);
-        $this->middleware('permission:crm_resource_types_update', ['only' => 'update', 'show']);
-        $this->middleware('permission:crm_resource_types_show', ['only' => 'show']);
-        $this->middleware('permission:crm_resource_types_destroy', ['only' => 'destroy']);
+        $this->middleware('permission:crm_cbr_index', ['only' => 'index']);
+        $this->middleware('permission:crm_cbr_store', ['only' => 'store', 'show']);
+        $this->middleware('permission:crm_cbr_update', ['only' => 'update', 'show']);
+        $this->middleware('permission:crm_cbr_show', ['only' => 'show']);
+        $this->middleware('permission:crm_cbr_destroy', ['only' => 'destroy']);
     }
 
     public function index(Request $request)
