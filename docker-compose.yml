@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: unilibrary
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: unilibrary_backend
+    entrypoint: sh -c "/var/www/init.sh"
+    volumes:
+      - /opt/unilibrary/.env.prod:/var/www/.env
+      - /opt/unilibrary/storage:/var/www/storage/app/public
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 2m
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        window: 120s
+        delay: 5s
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: nginx.Dockerfile
+    image: nginx_backend
+    ports:
+      - 6000:80
+    volumes:
+      - /opt/unilibrary/storage:/var/www/public/storage
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 2m
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        window: 120s
+        delay: 5s
